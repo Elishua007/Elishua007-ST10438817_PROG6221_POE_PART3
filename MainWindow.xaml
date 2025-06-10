@@ -1,0 +1,100 @@
+﻿<Window x:Class="ST10438817_POE_PART3_CHATBOT.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ST10438817_POE_PART3_CHATBOT"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Loaded="Window_Loaded"
+        KeyDown="Window_KeyDown" >
+    <Grid x:Name="MainGrid" Background="Black">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Logo -->
+            <RowDefinition Height="*" />
+            <!-- Chat area -->
+            <RowDefinition Height="Auto" />
+            <!-- Input box -->
+        </Grid.RowDefinitions>
+
+      
+
+            <!--JARVIS BACKGROUND -->
+     <TextBlock x:Name="ChatBotLogo"
+      Grid.Row="0"
+      FontFamily="Consolas"
+      FontSize="6"
+      Foreground= "LightGreen"
+      TextWrapping="Wrap"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Top"
+      Margin="10"
+      IsHitTestVisible="False"  
+     />
+
+
+        <StackPanel x:Name="ChatUI"
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Visibility="Collapsed"
+                    >
+
+
+
+          <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#222" Height="350">
+            <StackPanel x:Name="ChatResponse" Margin="5" Background="Black"/>
+          </ScrollViewer>
+
+
+
+            <Grid Margin="5" Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- TextBox fills available space -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Button sizes to content -->
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="UserInputBox"
+                 Grid.Column="0"
+                 Height="30"
+                 Width="640"
+                 Background="#333"
+                 Foreground="White"
+                 BorderThickness="3"
+                 FontSize="14"
+                 VerticalContentAlignment="Center"
+                 Margin="0,0,5,0" 
+                         />
+
+                <Button Content="SEND"
+                 Grid.Column="1"
+                 Width="80"
+                 Height="30"
+                 FontWeight="Bold"
+                 FontStyle="Italic"
+                 FontSize="16"
+                 Background="#10A37F"
+                 Foreground="White"
+                 Padding="5,0"
+                 VerticalAlignment="Center" 
+                 Click="SendButton_Click"        
+                />
+                
+            </Grid>
+
+
+
+
+        </StackPanel>
+
+
+    </Grid>
+    
+    
+    
+    
+</Window>

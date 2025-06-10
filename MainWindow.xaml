@@ -32,7 +32,8 @@
       HorizontalAlignment="Center"
       VerticalAlignment="Top"
       Margin="10"
-      IsHitTestVisible="False"  
+      IsHitTestVisible="False"
+     Visibility="Visible" 
      />
 
 
@@ -50,7 +51,7 @@
 
 
 
-            <Grid Margin="5" Height="40">
+            <Grid x:Name="Second" Margin="5" Height="40">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <!-- TextBox fills available space -->

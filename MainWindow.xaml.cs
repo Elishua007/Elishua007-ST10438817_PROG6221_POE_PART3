@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -156,7 +157,75 @@ namespace ST10438817_POE_PART3_CHATBOT
 
 
 
-        private void ConfigureUser()
+        //private void ConfigureUser()
+        //{
+        //    string UserInput = UserInputBox.Text.Trim();
+
+        //    try
+        //    {
+        //        if (string.IsNullOrWhiteSpace(UserInput))
+        //        {
+        //            ChatBot_Characteristics.AddMessage("Input cannot be empty. Please try again.", HorizontalAlignment.Left);
+        //            throw new Exception("Input was empty.");
+        //        }
+
+        //        ChatBot_Characteristics.AddMessage(UserInput, HorizontalAlignment.Right);
+        //        UserInputBox.Clear();
+
+        //        if (IsWaitingForUsername)
+        //        {
+        //            ud.UserName = UserInput;
+        //            IsWaitingForUsername = false;
+        //            IsWaitingForTopic = true;
+
+        //           ChatBot_Dialogue.DisplayChatBotTopics(ud);
+        //            ChatBot_Dialogue.DisplayUserFavouriteTopic();
+
+        //            return;
+        //        }
+
+
+        //        if (IsWaitingForTopic)
+        //        {
+        //            HashSet<string> validTopics = new HashSet<string> { "passwords", "phishing", "privacy" };
+        //            string[] words = UserInput.ToLower().Split(' ');
+
+        //            foreach (string word in words)
+        //            {
+        //                if (validTopics.Contains(word))
+        //                {
+        //                    ud.UserFavouriteTopic = word;
+        //                    IsWaitingForTopic = false;
+
+        //                    ChatBot_Characteristics.AddMessage(
+        //                        $"{ChatBot_Characteristics.DisplayChatBotDialog()}Great! I'll remember you're interested in {word}. It's a vital part of cybersecurity!",
+        //                        HorizontalAlignment.Left
+        //                    );
+
+        //                    // Optionally: trigger content/quiz next
+        //                    return;
+        //                }
+        //            }
+
+        //            // No valid topic found
+        //            ChatBot_Characteristics.AddMessage(
+        //                $"{ChatBot_Characteristics.DisplayChatBotDialog()}Sorry, I don't have information on that topic. Please choose: passwords, phishing, or privacy.",
+        //                HorizontalAlignment.Left
+        //            );
+        //            return;
+        //        }
+
+        //        // Future: handle general chat input here
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
+
+
+        private bool ConfigureUser()
         {
             string UserInput = UserInputBox.Text.Trim();
 
@@ -177,10 +246,16 @@ namespace ST10438817_POE_PART3_CHATBOT
                     IsWaitingForUsername = false;
                     IsWaitingForTopic = true;
 
-                   ChatBot_Dialogue.DisplayChatBotTopics(ud);
+                    ChatBot_Dialogue.DisplayChatBotTopics(ud);
                     ChatBot_Dialogue.DisplayUserFavouriteTopic();
 
-                    return;
+                    return true; // Continue
+                }
+
+                if (UserInput.Contains("bye") || UserInput.Contains("goodbye"))
+                {
+                    GoodbyeLogo();
+                    return false; // Stop processing further
                 }
 
                 if (IsWaitingForTopic)
@@ -200,8 +275,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                                 HorizontalAlignment.Left
                             );
 
-                            // Optionally: trigger content/quiz next
-                            return;
+                            return true; // Continue
                         }
                     }
 
@@ -210,7 +284,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                         $"{ChatBot_Characteristics.DisplayChatBotDialog()}Sorry, I don't have information on that topic. Please choose: passwords, phishing, or privacy.",
                         HorizontalAlignment.Left
                     );
-                    return;
+                    return true; // Continue
                 }
 
                 // Future: handle general chat input here
@@ -220,6 +294,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             {
                 MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            return true; // Continue by default
         }
 
 
@@ -227,95 +302,114 @@ namespace ST10438817_POE_PART3_CHATBOT
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            ConfigureUser();
-            DisplayResponseLogic(ud); // Pass the user details to the response logic
-
-
-        }
-
-
-        private string _currentFollowUpTopic; // Track the current topic for follow-up
-
-        private void DisplayResponseLogic(UserDetails userDetails)
-        {
-            HashSet<string> validTopics = new HashSet<string> { "passwords", "phishing", "privacy" };
-            CurrentUser = userDetails;
-            string userInput = UserInputBox.Text.Trim().ToLower();
-
-            // Handle follow-up responses first
-            if (!string.IsNullOrEmpty(_currentFollowUpTopic))
+            bool continueProcessing = ConfigureUser();
+            if (!continueProcessing)
             {
-                HandleFollowUpResponse(userInput, _currentFollowUpTopic);
-                _currentFollowUpTopic = null; // Reset after handling
+                // Goodbye was handled inside ConfigureUser
+                // Hide chat UI, show goodbye logo, etc. here if needed
+                ChatUI.Visibility = Visibility.Collapsed;
+                ChatBotLogo.Visibility = Visibility.Visible;
+                ChatBotLogo.FontSize = 11; 
                 return;
             }
 
-            // Normal response handling
-            if (DataDictionary.chatResponses.ContainsKey(userInput))
-            {
-                ChatBot_Characteristics.AddMessage(DataDictionary.chatResponses[userInput], HorizontalAlignment.Left);
-            }
-            else if (DataDictionary.cyberResponses.ContainsKey(userInput))
-            {
-                string response = DataDictionary.GetRandomCyberResponse(userInput);
-                ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
 
-                // Check for valid topics for follow-up
-                foreach (string word in userInput.Split(' '))
-                {
-                    if (validTopics.Contains(word))
-                    {
-                        _currentFollowUpTopic = word; // Store for follow-up
-                        ChatBot_Characteristics.AddMessage(
-                            $"{ChatBot_Characteristics.DisplayChatBotDialog()}Would you like to know more about {word}? (yes/no)",
-                            HorizontalAlignment.Left);
-                        UserInputBox.Clear();
-                        return; // Exit and wait for next input
-                    }
-                }
-            }
-            else if (DataDictionary.sentimentResponses.ContainsKey(userInput))
-            {
-                ChatBot_Characteristics.AddMessage(DataDictionary.GetRandomSentimentResponse(userInput), HorizontalAlignment.Left);
-            }
-            else
-            {
-                ChatBot_Characteristics.AddMessage(ChatBot_Dialogue.DisplayErrorMessage(), HorizontalAlignment.Left);
-            }
 
-            // Check favorite topic
-            if (CurrentUser?.UserFavouriteTopic != null &&
-                userInput.Contains(CurrentUser.UserFavouriteTopic.ToLower()))
-            {
-                OnFavoriteTopicMentioned?.Invoke(CurrentUser.UserFavouriteTopic);
-            }
         }
 
-        private void HandleFollowUpResponse(string userInput, string topic)
+
+        private void GoodbyeLogo()
         {
-            if (userInput == "yes" || userInput == "sure" || userInput == "absolutely")
-            {
-                ChatBot_Characteristics.AddMessage(
-                    $"{ChatBot_Characteristics.DisplayChatBotDialog()}Great! Here's more about {topic}:",
-                    HorizontalAlignment.Left);
-                ChatBot_Characteristics.AddMessage(
-                    DataDictionary.GetRandomCyberResponse(topic),
-                    HorizontalAlignment.Left);
-            }
-            else if (userInput == "no" || userInput == "not really" || userInput == "no thanks")
-            {
-                ChatBot_Characteristics.AddMessage(
-                    $"{ChatBot_Characteristics.DisplayChatBotDialog()}No problem! Ask me anything else.",
-                    HorizontalAlignment.Left);
-            }
-            else
-            {
-                ChatBot_Characteristics.AddMessage(
-                    $"{ChatBot_Characteristics.DisplayChatBotDialog()}Please answer with 'yes' or 'no'.",
-                    HorizontalAlignment.Left);
-                _currentFollowUpTopic = topic; // Keep the same topic for follow-up
-            }
+            ChatUI.Visibility = Visibility.Collapsed;
+            ChatBotLogo.Visibility = Visibility.Visible;
+
+            string goodbyeLogo = ChatBot_Logo.DisplayGoodbyeLogo();
+            ChatBotLogo.Text = goodbyeLogo;
         }
+
+
+        //private string _currentFollowUpTopic; // Track the current topic for follow-up
+
+        //private void DisplayResponseLogic(UserDetails userDetails)
+        //{
+        //    HashSet<string> validTopics = new HashSet<string> { "passwords", "phishing", "privacy" };
+        //    CurrentUser = userDetails;
+        //    string userInput = UserInputBox.Text.Trim().ToLower();
+
+        //    // Handle follow-up responses first
+        //    if (!string.IsNullOrEmpty(_currentFollowUpTopic))
+        //    {
+        //        HandleFollowUpResponse(userInput, _currentFollowUpTopic);
+        //        _currentFollowUpTopic = null; // Reset after handling
+        //        return;
+        //    }
+
+        //    // Normal response handling
+        //    if (DataDictionary.chatResponses.ContainsKey(userInput))
+        //    {
+        //        ChatBot_Characteristics.AddMessage(DataDictionary.chatResponses[userInput], HorizontalAlignment.Left);
+        //    }
+        //    else if (DataDictionary.cyberResponses.ContainsKey(userInput))
+        //    {
+        //        string response = DataDictionary.GetRandomCyberResponse(userInput);
+        //        ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
+
+        //        // Check for valid topics for follow-up
+        //        foreach (string word in userInput.Split(' '))
+        //        {
+        //            if (validTopics.Contains(word))
+        //            {
+        //                _currentFollowUpTopic = word; // Store for follow-up
+        //                ChatBot_Characteristics.AddMessage(
+        //                    $"{ChatBot_Characteristics.DisplayChatBotDialog()}Would you like to know more about {word}? (yes/no)",
+        //                    HorizontalAlignment.Left);
+        //                UserInputBox.Clear();
+        //                return; // Exit and wait for next input
+        //            }
+        //        }
+        //    }
+        //    else if (DataDictionary.sentimentResponses.ContainsKey(userInput))
+        //    {
+        //        ChatBot_Characteristics.AddMessage(DataDictionary.GetRandomSentimentResponse(userInput), HorizontalAlignment.Left);
+        //    }
+        //    else
+        //    {
+        //        ChatBot_Characteristics.AddMessage(ChatBot_Dialogue.DisplayErrorMessage(), HorizontalAlignment.Left);
+        //    }
+
+        //    // Check favorite topic
+        //    if (CurrentUser?.UserFavouriteTopic != null &&
+        //        userInput.Contains(CurrentUser.UserFavouriteTopic.ToLower()))
+        //    {
+        //        OnFavoriteTopicMentioned?.Invoke(CurrentUser.UserFavouriteTopic);
+        //    }
+        //}
+
+        //private void HandleFollowUpResponse(string userInput, string topic)
+        //{
+        //    if (userInput == "yes" || userInput == "sure" || userInput == "absolutely")
+        //    {
+        //        ChatBot_Characteristics.AddMessage(
+        //            $"{ChatBot_Characteristics.DisplayChatBotDialog()}Great! Here's more about {topic}:",
+        //            HorizontalAlignment.Left);
+        //        ChatBot_Characteristics.AddMessage(
+        //            DataDictionary.GetRandomCyberResponse(topic),
+        //            HorizontalAlignment.Left);
+        //    }
+        //    else if (userInput == "no" || userInput == "not really" || userInput == "no thanks")
+        //    {
+        //        ChatBot_Characteristics.AddMessage(
+        //            $"{ChatBot_Characteristics.DisplayChatBotDialog()}No problem! Ask me anything else.",
+        //            HorizontalAlignment.Left);
+        //    }
+        //    else
+        //    {
+        //        ChatBot_Characteristics.AddMessage(
+        //            $"{ChatBot_Characteristics.DisplayChatBotDialog()}Please answer with 'yes' or 'no'.",
+        //            HorizontalAlignment.Left);
+        //        _currentFollowUpTopic = topic; // Keep the same topic for follow-up
+        //    }
+        //}
 
 
 

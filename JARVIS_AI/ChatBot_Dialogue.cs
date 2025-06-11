@@ -235,54 +235,7 @@ So, what shall we uncover together today?:
         }
 
 
-        public static void QuizQuestions(int iCount)
-        {
-
-            //this method returns a list of quiz questions
-            List<string> QuizQuestionsContent = new List<string>
-            {
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}1. What is the safest way to create a strong password?
-        A) Use your pet’s name
-        B) Use your birthdate
-        C) Use a mix of letters, numbers, and symbols
-        D) Use the word “password”",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}2. Two-factor authentication requires:
-        A) Just a password
-        B) A password and a backup file
-        C) A username and date of birth
-        D) A password and a second form of verification",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}3. When should you update your antivirus software?
-        A) Once a year
-        B) Only if your PC is slow
-        C) Whenever a new update is available
-        D) Never",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}4. What does a firewall do?
-        A) Stores passwords
-        B) Protects against unauthorized access
-        C) Cleans your hard drive
-        D) Opens network ports",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}5. Why is using the same password for multiple accounts dangerous?",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}6. Name one way to identify a phishing email.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}7. What is social engineering and how can users protect themselves from it?",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}8. Explain the risks of using public Wi-Fi and how to stay safe.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}9. Describe what an activity log is in the context of cybersecurity and its benefits.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}10. How does a firewall protect your device and network?",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}11. Discuss the role of a cybersecurity awareness chatbot and how it can help users stay safe online.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}12. Describe the steps a user should take after suspecting their device is infected with malware.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}13. Describe how phishing attacks work and how to avoid falling for them.",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}14. What’s one benefit of using a password manager?",
-                $@"{ChatBot_Characteristics.DisplayChatBotDialog()}15. How can users protect their personal information on social media?",
-
-                // add more questions inlude multiple choice questions
-
-
-
-            };
-
-            Console.WriteLine(QuizQuestionsContent[iCount]);
-        }
-
-
+  
         public static void GetRandomResponseFavourtieTopic(string userInput)
         {
             if (CurrentUser.UserFavouriteTopic != null &&

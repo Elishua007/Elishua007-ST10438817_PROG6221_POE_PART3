@@ -302,16 +302,8 @@ namespace ST10438817_POE_PART3_CHATBOT
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            bool continueProcessing = ConfigureUser();
-            if (!continueProcessing)
-            {
-                // Goodbye was handled inside ConfigureUser
-                // Hide chat UI, show goodbye logo, etc. here if needed
-                ChatUI.Visibility = Visibility.Collapsed;
-                ChatBotLogo.Visibility = Visibility.Visible;
-                ChatBotLogo.FontSize = 11; 
-                return;
-            }
+            
+            ConfigureUser();
 
 
 

@@ -32,7 +32,7 @@ namespace POE_ChatBot_ST10438817
 
         public static void AddMessage(string message, HorizontalAlignment alignment)
         {
-
+            //this method is just for decoration make the chatbot look realistic and nice
 
             TextBlock msgText = new TextBlock
             {

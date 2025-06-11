@@ -63,7 +63,7 @@ namespace ST10438817_POE_PART2_CHATBOT
         {
             "Using the same password for multiple accounts is dangerous because if one account is hacked, all your other accounts can be easily accessed using the same password.",
             "Check for suspicious links or email addresses that don’t match the sender.",
-            "Social engineering involves manipulating people into giving up confidential information. Examples include phishing and baiting. To protect yourself, never trust unknown sources, verify identities, and think before clicking on links.",
+            "Social engineering involves manipulating people into giving up confidential information.",
             "Public Wi-Fi is often unsecured, allowing hackers to intercept your data. To stay safe, avoid logging into sensitive accounts, use a VPN, and never share personal info over public networks.",
             "An activity log records user actions and access events, helping detect unauthorized activity and ensuring accountability.",
             "A firewall acts as a barrier between your device and potential threats from the internet. It filters incoming and outgoing traffic based on security rules, blocking unauthorized access and helping prevent malware attacks.",

@@ -255,6 +255,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             AddQuizMessage($"USER: {userAnswer}", HorizontalAlignment.Right);
             Chatbot_Quiz.SubmitAnswer(userAnswer);
             QuizAnswerBox.Text = "";
+            QuizScrollBar.ScrollToEnd(); // Scroll to the end after submitting an answer
         }
 
 
@@ -271,7 +272,7 @@ namespace ST10438817_POE_PART3_CHATBOT
 
             SolidColorBrush bubbleColor = alignment == HorizontalAlignment.Left
                 ? new SolidColorBrush(Color.FromRgb(50, 50, 50))      // Bot: dark gray
-                : new SolidColorBrush(Color.FromRgb(16, 163, 127));   // User: teal-green
+                : new SolidColorBrush(Color.FromRgb(0, 122, 204));   // User: bright blue
 
             Border bubble = new Border
             {
@@ -298,7 +299,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                 {
                     Background = alignment == HorizontalAlignment.Left
                         ? new SolidColorBrush(Color.FromRgb(50, 50, 50)) // bot bubble color
-                        : new SolidColorBrush(Color.FromRgb(16, 163, 127)), // user bubble color
+                        : new SolidColorBrush(Color.FromRgb(0, 122, 204)), // user bubble color
                     CornerRadius = new CornerRadius(12),
                     Margin = new Thickness(4),
                     Padding = new Thickness(10),

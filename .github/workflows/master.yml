@@ -1,4 +1,4 @@
-name: C# Build and Syntax Check
+name: C# WPF Build and Syntax Check
 on:
   push:
     branches: ["master"]
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Uses a VM runner
+    runs-on: windows-latest # Uses a VM runner
 
     steps:
       - name: Checkout Code #Clones the repo

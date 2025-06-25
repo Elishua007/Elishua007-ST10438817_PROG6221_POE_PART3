@@ -41,10 +41,11 @@ namespace ST10438817_POE_PART3_CHATBOT.JARVIS_AI
             string numberedList = "";
             for (int i = 0; i < recent.Count; i++)
             {
+                numberedList += "\n";
                 numberedList += $"{i + 1}. {recent[i]}\n";
             }
 
-            return "RECENT ACTIVITIES\n-------------------------------------------------------------------------------------------\n" + numberedList+"\n";
+            return "RECENT ACTIVITIES\n-------------------------------------------------------------------------------------------\n" + numberedList;
         }
 
 

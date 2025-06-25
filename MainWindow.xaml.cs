@@ -261,16 +261,31 @@ namespace ST10438817_POE_PART3_CHATBOT
 
         }
 
+        //private void SubmitTaskCommand_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string taskInput = TaskInputBox.Text.Trim();
+        //    if (string.IsNullOrEmpty(taskInput)) return;
+
+        //    AddTaskMessage($"USER: {taskInput}", HorizontalAlignment.Right);
+        //    ChatBot_Task.ProcessUserInput(taskInput);
+        //    TaskInputBox.Text = "";
+        //    TaskScrollBar.ScrollToEnd();
+        //}
+
+
         private void SubmitTaskCommand_Click(object sender, RoutedEventArgs e)
         {
             string taskInput = TaskInputBox.Text.Trim();
-            if (string.IsNullOrEmpty(taskInput)) return;
 
-            AddTaskMessage($"USER: {taskInput}", HorizontalAlignment.Right);
+            // Always show user's input even if it's blank (optional UX choice)
+            if (!string.IsNullOrWhiteSpace(taskInput))
+                AddTaskMessage($"USER: {taskInput}", HorizontalAlignment.Right);
+
             ChatBot_Task.ProcessUserInput(taskInput);
             TaskInputBox.Text = "";
             TaskScrollBar.ScrollToEnd();
         }
+
 
         private void AddTaskMessage(string message, HorizontalAlignment alignment)
         {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ST10438817_POE_PART3_CHATBOT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800"
+        Title="MainWindow" Height="700" Width="800"
         Loaded="Window_Loaded"
         KeyDown="Window_KeyDown" >
     <Grid x:Name="MainGrid" Background="Black">
@@ -20,10 +20,10 @@
             <!-- Input box -->
         </Grid.RowDefinitions>
 
-      
 
-            <!--JARVIS BACKGROUND -->
-     <TextBlock x:Name="ChatBotLogo"
+
+        <!--JARVIS BACKGROUND -->
+        <TextBlock x:Name="ChatBotLogo"
       Grid.Row="0"
       FontFamily="Consolas"
       FontWeight="Bold"
@@ -37,6 +37,8 @@
      Visibility="Visible" 
      />
 
+        <ProgressBar x:Name="LoadingBar" HorizontalAlignment="Center" Width="400" Height="20" Minimum="0" Maximum="100" Value="0" Margin="0,402,0,12" Grid.Row="1" Visibility="Visible"/>
+
 
         <StackPanel x:Name="ChatUI"
                 Grid.Row="1"
@@ -46,9 +48,9 @@
 
 
 
-          <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#222" Height="350">
-            <StackPanel x:Name="ChatResponse" Margin="5" Background="Black"/>
-          </ScrollViewer>
+            <ScrollViewer x:Name="ChatBotScrollBar"  VerticalScrollBarVisibility="Auto" Background="#222" Height="350">
+                <StackPanel x:Name="ChatResponse" Margin="5" Background="Black"/>
+            </ScrollViewer>
 
 
 
@@ -72,9 +74,9 @@
                  Margin="0,0,5,0" 
                          />
 
-                <Button Content="SEND"
+                <Button x:Name="Send_Button" Content="SEND"
                  Grid.Column="1"
-                 Width="80"
+                 Width="90"
                  Height="30"
                  FontWeight="Bold"
                  FontStyle="Italic"
@@ -90,13 +92,13 @@
 
 
 
-            
+
 
 
         </StackPanel>
 
-     <Button x:Name="StartQuiz" Content="START QUIZ"
-     Width="100"
+        <Button x:Name="StartQuiz" Content="START QUIZ"
+     Width="115"
      Height="30"
      Margin="10"
      FontSize="16"
@@ -108,6 +110,21 @@
      Foreground="White"
      Click="StartQuiz_Click"
      />
+
+        <Button x:Name="TaskAssistant" Content="TASK"
+          Width="100"
+          Height="30"
+          Margin="10"
+          FontSize="16"
+          FontWeight="Bold"
+          FontStyle="Italic"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top"
+          Background="#10A37F"
+          Foreground="White"
+          Click="TaskAssistant_Click"
+         />
+
 
 
 
@@ -148,10 +165,62 @@
                  FontStyle="Italic"
                  Click="SubmitAnswer_Click"
                 />
-                
+
             </Grid>
-            
+
         </StackPanel>
+
+
+
+
+
+        <StackPanel x:Name="TaskUI"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Visibility="Collapsed"
+            Background="Black">
+
+            <!-- Task messages go here -->
+            <ScrollViewer x:Name="TaskScrollBar" VerticalScrollBarVisibility="Auto" Height="300" Background="#111">
+                <StackPanel x:Name="TaskChatArea" Margin="5"/>
+            </ScrollViewer>
+
+            <!-- User input for task manager -->
+            <Grid Margin="5" Height="40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="TaskInputBox"
+                 Grid.Column="0"
+                 Height="30"
+                 Background="#222"
+                 Foreground="White"
+                 FontSize="14"
+                 VerticalContentAlignment="Center"
+                 Margin="0,0,5,0"
+                 />
+
+                <Button Content="ENTER"
+                Grid.Column="1"
+                Width="80"
+                Height="30"
+                Background="#007ACC"
+                Foreground="White"
+                FontWeight="Bold"
+                FontSize="16"
+                FontStyle="Italic"
+                Click="SubmitTaskCommand_Click" />
+            </Grid>
+
+          
+        </StackPanel>
+
+
+
+
+
 
         <Button x:Name="ReturnChatBot" Content="JARVIS"
          Grid.Column="1"
@@ -169,12 +238,25 @@
         />
 
 
+        <Button x:Name="ActivityLog" Content="ACTIVITY LOG"
+         Width="120"
+         Height="30"
+         Margin="10"
+         FontSize="16"
+         FontWeight="Bold"
+         FontStyle="Italic"
+         HorizontalAlignment="Right"
+         VerticalAlignment="Top"
+         Background="#10A37F"
+         Foreground="White"
+         Click="ActivityLog_Click" 
+        />
 
 
 
     </Grid>
-    
-    
-    
-    
+
+
+
+
 </Window>

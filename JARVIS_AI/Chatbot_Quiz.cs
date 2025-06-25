@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using FuzzySharp;
 using POE_ChatBot_ST10438817;
+using ST10438817_POE_PART3_CHATBOT.JARVIS_AI;
 
 
 
@@ -71,7 +72,7 @@ namespace ST10438817_POE_PART2_CHATBOT
             "Immediately disconnect from the internet, run a full antivirus scan, remove any suspicious files, change all passwords, and update your software. If the problem persists, consider restoring the system or seeking professional help.",
             "Phishing attacks trick users into revealing personal data by pretending to be trustworthy sources, often via email or text. To avoid them, check for suspicious links, spelling errors, and never share sensitive information online without verification.",
             "It helps you generate and store strong, unique passwords for each account.",
-            "Users can protect their personal information on social media by setting their profiles to private, avoiding sharing sensitive details like home address or phone number, using strong passwords, enabling two-factor authentication, and being cautious about accepting friend requests from strangers."
+            "Users can protect their personal information on social media sby setting their profiles to private, avoiding sharing sensitive details like home address or phone number, using strong passwords, enabling two-factor authentication, and being cautious about accepting friend requests from strangers."
         };
 
         private static int currentQuestionIndex = 0;
@@ -97,6 +98,8 @@ namespace ST10438817_POE_PART2_CHATBOT
             currentQuestionIndex = 0;
             score = 0;
             IsQuizActive = true;
+
+            ChatBot_Activity_Log.ActivityLog("QUIZ", "User Started The Quiz");
 
             DisplayQuizMessage?.Invoke("Starting Quiz! Answer the following questions:", HorizontalAlignment.Left);
             DisplayCurrentQuestion();
@@ -131,10 +134,13 @@ namespace ST10438817_POE_PART2_CHATBOT
                 {
                     DisplayQuizMessage?.Invoke("Correct!", HorizontalAlignment.Left);
                     score++;
+                    ChatBot_Activity_Log.ActivityLog("QUIZ", $"User Answered Question {currentQuestionIndex + 1} Correctly. \n Current score: {score}/{currentQuestionIndex + 1}");
                 }
                 else
                 {
                     DisplayQuizMessage?.Invoke($"Incorrect. The correct answer was: {correct}", HorizontalAlignment.Left);
+                    ChatBot_Activity_Log.ActivityLog("QUIZ", $"User Answered Question {currentQuestionIndex + 1} Incorrectly. \n Current score: {score}/{currentQuestionIndex + 1}");
+
                 }
             }
             else
@@ -147,11 +153,13 @@ namespace ST10438817_POE_PART2_CHATBOT
                     {
                         DisplayQuizMessage?.Invoke("Nice answer! Keep Going!!", HorizontalAlignment.Left);
                         score++;
+                        ChatBot_Activity_Log.ActivityLog("QUIZ", $"User Answered Open-Ended Question {currentQuestionIndex + 1} Correctly. \n Current score: {score}/{currentQuestionIndex + 1}");
                     }
                     else
                     {
                         DisplayQuizMessage?.Invoke($"Hmm, not quite. Correct answer: {expectedAnswer}", HorizontalAlignment.Left);
-                       
+                        ChatBot_Activity_Log.ActivityLog("QUIZ", $"User Answered Open-Ended Question {currentQuestionIndex + 1} Incorrectly. \n Current score: {score}/{currentQuestionIndex + 1}");
+
                     }
                 }
             }
@@ -171,6 +179,7 @@ namespace ST10438817_POE_PART2_CHATBOT
                 IsQuizActive = false;
                 string finalScoreMessage = $"Quiz complete! Your final score: {score}/{Questions.Count}";
                 DisplayQuizMessage?.Invoke(finalScoreMessage, HorizontalAlignment.Left);
+                ChatBot_Activity_Log.ActivityLog("QUIZ", $"User Completed The Quiz. Final Score: {score}/{Questions.Count}");
 
                 // Save the final score to history
                 PastScores.Add(finalScoreMessage);

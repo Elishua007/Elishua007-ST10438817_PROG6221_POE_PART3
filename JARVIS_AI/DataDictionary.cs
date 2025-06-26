@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using System.Windows;
 
 
+
 namespace POE_ChatBot_ST10438817
 {
 
-    internal static class DataDictionary
+    public static class DataDictionary
     {
 
-        //define my delegate
+  
+
         public delegate void FavoriteTopicHandler(string topic);
 
         public static event FavoriteTopicHandler OnFavoriteTopicMentioned;
@@ -21,35 +23,18 @@ namespace POE_ChatBot_ST10438817
         // Create a single instance of Random and reuse it
         private static Random random = new Random();
 
-        public static Dictionary<string, string> chatResponses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static Dictionary<string, string> chatResponses = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public static Dictionary<string, List<string>> cyberResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+        public static Dictionary<string, List<string>> sentimentResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+        public static void NotifyFavoriteTopicMentioned(string topic)
         {
-
-
-
-        };
-
-
-        public static Dictionary<string, List<string>> cyberResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
-        {
-
-
-
-        };
-
-
-        public static Dictionary<string, List<string>> sentimentResponses = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
-        {
-
-
-
-        };
-
-
+            OnFavoriteTopicMentioned?.Invoke(topic);
+        }
 
         public static string GetRandomCyberResponse(string key)
         {
-            // this method will alow me to display random resposnes to the user for cyber content
-
+            // This method will allow me to display random responses to the user for cyber content
             if (cyberResponses.TryGetValue(key, out List<string> randomResponses) && randomResponses.Count > 0)
             {
                 return randomResponses[random.Next(randomResponses.Count)];
@@ -59,8 +44,7 @@ namespace POE_ChatBot_ST10438817
 
         public static string GetRandomSentimentResponse(string key)
         {
-            // this method will alow me to display random resposnes to the user for sentiment content
-
+            // This method will allow me to display random responses to the user for sentiment content
             if (sentimentResponses.TryGetValue(key, out List<string> randomResponses) && randomResponses.Count > 0)
             {
                 return randomResponses[random.Next(randomResponses.Count)];
@@ -68,46 +52,37 @@ namespace POE_ChatBot_ST10438817
             return "I don't have a response for that.";
         }
 
-
-
-       
-
-
         public static void DisplayResponse()
         {
-
-            
+            // Greetings
             List<string> greetings = new List<string> { "hello", "hi", "hey", "greetings" };
             foreach (var greeting in greetings)
             {
-             
-                
-                    chatResponses.Add(greeting, ChatBot_Dialogue.DisplayGreeting());
-                
+                chatResponses.Add(greeting, ChatBot_Dialogue.DisplayGreeting());
             }
 
-
+            // Goodbyes
             List<string> goodbyes = new List<string> { "goodbye", "bye", "see you later", "exit" };
             foreach (var goodbye in goodbyes)
             {
-                    chatResponses.Add(goodbye, ChatBot_Dialogue.DisplayGoodBye());   
+                chatResponses.Add(goodbye, ChatBot_Dialogue.DisplayGoodBye());
             }
 
-
+            // Thanks
             List<string> thanks = new List<string> { "thanks", "thank", "thank you so much", "thank you" };
             foreach (var thank in thanks)
             {
-
                 chatResponses.Add(thank, ChatBot_Dialogue.DisplayYourWelcomeMessage());
             }
 
-
+            // Purposes
             List<string> purposes = new List<string> { "purpose", "what is your purpose?", "what is your purpose" };
             foreach (var purpose in purposes)
             {
                 chatResponses.Add(purpose, ChatBot_Dialogue.DisplayChatBoxPurpose());
             }
 
+            // Cybersecurity topics
             List<string> phishings = new List<string> { "phishing", "facts about phishing", "talk about phishing", "discuss about phishing", "what is phishing?" };
             foreach (var phishing in phishings)
             {
@@ -126,32 +101,66 @@ namespace POE_ChatBot_ST10438817
                 cyberResponses.Add(privacy, ChatBot_Dialogue.PrivacyFacts());
             }
 
+            // Sentiment responses
+            List<string> passwordSentiment = new List<string>
+            {
+                "concerned about password",
+                "worried about password",
+                "frustrated about password",
+                "password safety",
+                "password problem",
+                "password issue",
+                "password worry",
+                "scared of password"
+            };
 
-            List<string> passwordSentiment = new List<string> { "I am concerned about password saftey", "I am worried about password saftey", "I am frustrated about password saftey", "I am concerned about passwords", "I am worried about passwords", "I am frustrated about passwords" };
+            List<string> phishingSentiment = new List<string>
+            {
+                "concerned about phishing",
+                "worried about phishing",
+                "frustrated about phishing",
+                "phishing fear",
+                "phishing problem",
+                "phishing issue",
+                "phishing worry",
+                "scared of phishing"
+            };
+
+            List<string> privacySentiment = new List<string>
+            {
+                "concerned about privacy",
+                "worried about privacy",
+                "frustrated about privacy",
+                "privacy fear",
+                "privacy problem",
+                "privacy issue",
+                "privacy worry",
+                "scared of privacy"
+            };
+
             foreach (var passwordSentimentFact in passwordSentiment)
             {
                 sentimentResponses.Add(passwordSentimentFact, ChatBot_Dialogue.PasswordSentiment());
             }
 
-            List<string> phishingSentiment = new List<string> { "I am concerned about phishing", "I am worried about phishing", "I am frustrated about phishing" };
             foreach (var phishingSentimentFact in phishingSentiment)
             {
                 sentimentResponses.Add(phishingSentimentFact, ChatBot_Dialogue.PhishingSentiment());
             }
 
-            List<string> privacySentiment = new List<string> { "I am concerned about privacy", "I am worried about privacy", "I am frustrated about privacy" };
             foreach (var privacySentimentFact in privacySentiment)
             {
                 sentimentResponses.Add(privacySentimentFact, ChatBot_Dialogue.PrivacySentiment());
             }
-
-
-            
-
-        }//end of method
+        }
 
 
 
-    }//end of class
-}
+
+    }//end of method
+
+
+
+ }//end of class
+
 

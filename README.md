@@ -1,4 +1,4 @@
-## 🧠 BRIEF DESCRIPTION
+## BRIEF DESCRIPTION
 
 JARVIS is a GUI-based cybersecurity awareness chatbot built in C# using Windows Forms (WinForms) and XAML. JARVIS is a friendly, interactive, conversational chatbot, designed to educate users on cybersecurity topics like password safety, phishing, and privacy settings.
 

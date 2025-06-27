@@ -1,4 +1,6 @@
-BRIEF DESCRIPTION
+**BRIEF DESCRIPTION**
+
+
 JARVIS is a GUI-based cybersecurity awareness chatbot built in C# using Windows Forms (WinForms) and XAML. JARVIS is a friendly, 
 interactive, conversational chatbot, designed to educate users on cybersecurity topics like password safety, phishing, and privacy 
 settings. To make this bot feel user-friendly to interact with, I have added personalization, console styling, and even voice interaction. 
@@ -6,7 +8,7 @@ JARVIS with new GUI components, a cybersecurity quiz, task assistant, and basic 
 
 
 
-FEATURES
+**FEATURES**
 •	Conversational GUI with stylized bot and user dialogues.
 •	Personalizes interaction using user’s name.
 •	Voice greeting using .wav audio playback (via NAudio).
@@ -35,7 +37,7 @@ The answer must meet a certain percentage compared to the correct/actual answer.
 
 
 
-HOW TO SETUP PROJECT
+**HOW TO SETUP PROJECT**
 
 1.	Prerequisites
 •	Visual Studio 2022
@@ -72,8 +74,8 @@ Build and run the project from Visual Studio. Interact with the chatbot through 
 
 
 
+**FLOW OF ACTIVITIES**
 
-FLOW OF ACTIVITIES
 
 1.	Startup Sequence
 •	The application launches with an ASCII logo display.
@@ -127,8 +129,7 @@ Upon the user saying “goodbye” (or anything like “goodbye”) to the chatb
 
 
 
-
-REQUIRED PACKAGES
+**REQUIRED PACKAGES**
 Install the NuGet Package, from the NuGet Packages.  NAudio is used to play audio file within the chatbot. 
 This is how voice integration is incorporated into the project. Install FuzzySharp, from the NuGet Packages. 
 Chatbot uses FuzzySharp package to check the user’s answer against the correct answer. The answer must meet 
@@ -136,7 +137,7 @@ a certain percentage compared to the correct/actual answer.
 
 
 
-DEVELOPER INFORMATION
+**DEVELOPER INFORMATION**
 DEVELOPER NAME: Elishua Emmanuel Naidoo
 DEVELOPER STUDENT NUMBER: ST10438817
 INSTITUTION: The IIE Varsity College, Westville

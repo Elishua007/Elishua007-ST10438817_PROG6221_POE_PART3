@@ -9,6 +9,8 @@ JARVIS with new GUI components, a cybersecurity quiz, task assistant, and basic 
 
 
 **FEATURES**
+
+
 •	Conversational GUI with stylized bot and user dialogues.
 •	Personalizes interaction using user’s name.
 •	Voice greeting using .wav audio playback (via NAudio).
@@ -36,8 +38,8 @@ The answer must meet a certain percentage compared to the correct/actual answer.
 
 
 
-
 **HOW TO SETUP PROJECT**
+
 
 1.	Prerequisites
 •	Visual Studio 2022

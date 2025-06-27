@@ -39,9 +39,13 @@ namespace ST10438817_POE_PART3_CHATBOT
 
         private static Random random = new Random();
 
+        private bool IsWaitingForFollowUp = false;
+
+        private string LastDiscussedTopic = "";
 
 
-       
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -249,18 +253,13 @@ namespace ST10438817_POE_PART3_CHATBOT
             return true;
         }
 
-     
+
+
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string userInput = UserInputBox.Text.Trim();
 
-            // Ignore empty input
-            if (string.IsNullOrEmpty(userInput))
-            {
-                return;
-            }
-
-            // Process user configuration or message
+           
             bool configured = ConfigureUser();
 
             if (configured && IsConfiguredUser)
@@ -271,7 +270,8 @@ namespace ST10438817_POE_PART3_CHATBOT
             UserInputBox.Clear();
         }
 
-       
+
+
         private void GoodbyeLogo()
         {
             ChatUI.Visibility = Visibility.Collapsed;
@@ -463,84 +463,75 @@ namespace ST10438817_POE_PART3_CHATBOT
             
         }
 
-      
+
         private void ProcessUserMessage(string userInput)
         {
-            // Normalize input
             userInput = userInput.Trim().ToLower();
+
+            // Handle follow-up response
+            if (IsWaitingForFollowUp)
+            {
+                if (userInput.Contains("yes"))
+                {
+                    string fact = GetRandomFact(LastDiscussedTopic);
+                    ChatBot_Characteristics.AddMessage($"{fact}", HorizontalAlignment.Left);
+                }
+                else if (userInput.Contains("no"))
+                {
+                    ChatBot_Characteristics.AddMessage("No problem! What would you like to talk about instead?", HorizontalAlignment.Left);
+                }
+                else
+                {
+                    ChatBot_Characteristics.AddMessage("Please respond with 'yes' or 'no'. Would you like to know more about this topic?", HorizontalAlignment.Left);
+                    return;
+                }
+
+                IsWaitingForFollowUp = false;
+                LastDiscussedTopic = "";
+                return;
+            }
+
             bool matched = false;
 
-            // 1. First check sentiment responses
-            if (!matched)
+            // 1. Sentiment Responses
+            foreach (var key in DataDictionary.sentimentResponses.Keys)
             {
-                // Check password-related sentiments
-                foreach (var key in DataDictionary.sentimentResponses.Keys.Where(k =>
-                    k.Contains("password", StringComparison.OrdinalIgnoreCase)))
+                if (userInput.Contains(key.ToLower()))
                 {
-                    if (userInput.Contains(key.ToLower()))
-                    {
-                        var responses = DataDictionary.sentimentResponses[key];
-                        string response = responses[random.Next(responses.Count)];
-                        ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
-                        ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
-                        matched = true;
-                        break;
-                    }
-                }
-
-                if (!matched)
-                {
-                    // Check phishing-related sentiments
-                    foreach (var key in DataDictionary.sentimentResponses.Keys.Where(k =>
-                        k.Contains("phishing", StringComparison.OrdinalIgnoreCase)))
-                    {
-                        if (userInput.Contains(key.ToLower()))
-                        {
-                            var responses = DataDictionary.sentimentResponses[key];
-                            string response = responses[random.Next(responses.Count)];
-                            ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
-                            ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
-                            matched = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!matched)
-                {
-                    // Check privacy-related sentiments
-                    foreach (var key in DataDictionary.sentimentResponses.Keys.Where(k =>
-                        k.Contains("privacy", StringComparison.OrdinalIgnoreCase)))
-                    {
-                        if (userInput.Contains(key.ToLower()))
-                        {
-                            var responses = DataDictionary.sentimentResponses[key];
-                            string response = responses[random.Next(responses.Count)];
-                            ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
-                            ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
-                            matched = true;
-                            break;
-                        }
-                    }
+                    var responses = DataDictionary.sentimentResponses[key];
+                    string response = responses[random.Next(responses.Count)];
+                    ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
+                    ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
+                    matched = true;
+                    break;
                 }
             }
 
-            // 2. Then check cybersecurity topics
+            // 2. Cybersecurity Topics
             if (!matched)
             {
                 foreach (var key in DataDictionary.cyberResponses.Keys)
                 {
                     if (userInput.Contains(key.ToLower()))
                     {
-                        ChatBot_Characteristics.AddMessage(DataDictionary.GetRandomCyberResponse(key), HorizontalAlignment.Left);
+                        string response = DataDictionary.GetRandomCyberResponse(key);
+                        ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
                         ChatBot_Activity_Log.ActivityLog("CYBERSECURITY", $"User Asked About: {key}");
+
+                        // Set follow-up context
+                        LastDiscussedTopic = key;
+                        IsWaitingForFollowUp = true;
+
+                        // Ask follow-up
+                        ChatBot_Characteristics.AddMessage("Would you like to know more about this topic?", HorizontalAlignment.Left);
+
                         matched = true;
                         break;
                     }
                 }
             }
 
-            // 3. Finally check general chat responses
+            // 3. General Chat Responses
             if (!matched)
             {
                 foreach (var key in DataDictionary.chatResponses.Keys)
@@ -555,13 +546,13 @@ namespace ST10438817_POE_PART3_CHATBOT
                 }
             }
 
-            // No matches found - show error
+            // 4. No match found
             if (!matched)
             {
                 ChatBot_Characteristics.AddMessage(ChatBot_Dialogue.DisplayErrorMessage(), HorizontalAlignment.Left);
             }
 
-            // Check for mention of favorite topic
+            // 5. Favorite topic check
             if (ChatBot_Dialogue.CurrentUser != null &&
                 !string.IsNullOrEmpty(ChatBot_Dialogue.CurrentUser.UserFavouriteTopic) &&
                 userInput.Contains(ChatBot_Dialogue.CurrentUser.UserFavouriteTopic, StringComparison.OrdinalIgnoreCase))
@@ -569,7 +560,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                 DataDictionary.NotifyFavoriteTopicMentioned(ChatBot_Dialogue.CurrentUser.UserFavouriteTopic);
             }
 
-            // Check for exit commands
+            // 6. Exit commands
             if (userInput == "bye" || userInput == "goodbye" || userInput == "exit" || userInput == "see you later")
             {
                 GoodbyeLogo();
@@ -578,12 +569,25 @@ namespace ST10438817_POE_PART3_CHATBOT
 
 
 
+        public static string GetRandomFact(string topic)
+        {
+            List<string> facts = topic.ToLower() switch
+            {
+                "passwords" => ChatBot_Dialogue.PasswordFacts(),
+                "phishing" => ChatBot_Dialogue.PhishingFacts(),
+                "privacy" => ChatBot_Dialogue.PrivacyFacts(),
+                _ => new List<string> { "Sorry, I don’t have facts on that topic yet." }
+            };
+
+            return facts[random.Next(facts.Count)];
+        }
 
 
 
 
 
-    
+
+
 
 
 

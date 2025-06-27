@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using FuzzySharp;
@@ -48,13 +49,13 @@ namespace ST10438817_POE_PART2_CHATBOT
 
             "5. Why is using the same password for multiple accounts dangerous?",
             "6. Name one way to identify a phishing email.",
-            "7. What is social engineering and how can users protect themselves from it?",
+            "7. What is social engineering?",
             "8. Explain the risks of using public Wi-Fi and how to stay safe.",
             "9. Describe what an activity log is in the context of cybersecurity and its benefits.",
             "10. How does a firewall protect your device and network?",
-            "11. Discuss the role of a cybersecurity awareness chatbot and how it can help users stay safe online.",
+            "11. Discuss the role of a cybersecurity awareness chatbot.",
             "12. Describe the steps a user should take after suspecting their device is infected with malware.",
-            "13. Describe how phishing attacks work and how to avoid falling for them.",
+            "13. Describe how phishing attacks work.",
             "14. What’s one benefit of using a password manager?",
             "15. How can users protect their personal information on social media?"
         };
@@ -65,12 +66,12 @@ namespace ST10438817_POE_PART2_CHATBOT
             "Using the same password for multiple accounts is dangerous because if one account is hacked, all your other accounts can be easily accessed using the same password.",
             "Check for suspicious links or email addresses that don’t match the sender.",
             "Social engineering involves manipulating people into giving up confidential information.",
-            "Public Wi-Fi is often unsecured, allowing hackers to intercept your data. To stay safe, avoid logging into sensitive accounts, use a VPN, and never share personal info over public networks.",
+            "Public Wi-Fi is often unsecured, allowing hackers to intercept your data.",
             "An activity log records user actions and access events, helping detect unauthorized activity and ensuring accountability.",
             "A firewall acts as a barrier between your device and potential threats from the internet. It filters incoming and outgoing traffic based on security rules, blocking unauthorized access and helping prevent malware attacks.",
             "A cybersecurity chatbot educates users about online threats, offers safety tips, and helps build good habits. It provides instant, personalized advice, quizzes for learning, reminders, and simulated conversations to reinforce cybersecurity practices.",
             "Immediately disconnect from the internet, run a full antivirus scan, remove any suspicious files, change all passwords, and update your software. If the problem persists, consider restoring the system or seeking professional help.",
-            "Phishing attacks trick users into revealing personal data by pretending to be trustworthy sources, often via email or text. To avoid them, check for suspicious links, spelling errors, and never share sensitive information online without verification.",
+            "Phishing attacks trick users into revealing personal data by pretending to be trustworthy sources, often via email or text.",
             "It helps you generate and store strong, unique passwords for each account.",
             "Users can protect their personal information on social media sby setting their profiles to private, avoiding sharing sensitive details like home address or phone number, using strong passwords, enabling two-factor authentication, and being cautious about accepting friend requests from strangers."
         };
@@ -188,23 +189,29 @@ namespace ST10438817_POE_PART2_CHATBOT
 
 
 
-        public static bool FuzzyMatch(string userInput, string correctAnswer, int threshold = 75)
+        public static bool FuzzyMatch(string userInput, string correctAnswer, int threshold = 60)
         {
             int score = Fuzz.PartialRatio(userInput.ToLower(), correctAnswer.ToLower());
             return score >= threshold;
         }
 
-
         public static string GetPastScores()
         {
-           
             if (PastScores.Count == 0)
             {
                 return "No past scores found yet. Try completing a quiz first!";
             }
 
-            return "Your past quiz scores:\n" + PastScores;
+            StringBuilder result = new StringBuilder("Your past quiz scores:\n");
+
+            for (int i = 0; i < PastScores.Count; i++)
+            {
+                result.AppendLine($"Quiz {i + 1}: {PastScores[i]}");
+            }
+
+            return result.ToString();
         }
+
 
 
 

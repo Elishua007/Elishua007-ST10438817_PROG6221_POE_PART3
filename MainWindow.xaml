@@ -24,18 +24,18 @@
 
         <!--JARVIS BACKGROUND -->
         <TextBlock x:Name="ChatBotLogo"
-      Grid.Row="0"
-      FontFamily="Consolas"
-      FontWeight="Bold"
-      FontSize="4.5"
-      Foreground= "LightGreen"
-      TextWrapping="Wrap"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Top"
-      Margin="10"
-      IsHitTestVisible="False"
-     Visibility="Visible" 
-     />
+         Grid.Row="0"
+         FontFamily="Consolas"
+         FontWeight="Bold"
+         FontSize="4.5"
+         Foreground= "LightGreen"
+         TextWrapping="Wrap"
+         HorizontalAlignment="Center"
+         VerticalAlignment="Top"
+         Margin="10"
+         IsHitTestVisible="False"
+         Visibility="Visible" 
+       />
 
         <ProgressBar x:Name="LoadingBar" VerticalAlignment="Top" HorizontalAlignment="Center" Width="300" Height="10" Minimum="0" Maximum="100" Value="0" Margin="0,320,0,0" Grid.Row="0" Visibility="Visible"/>
 
@@ -72,7 +72,7 @@
                  FontSize="14"
                  VerticalContentAlignment="Center"
                  Margin="0,0,5,0" 
-                         />
+                />
 
                 <Button x:Name="Send_Button" Content="SEND"
                  Grid.Column="1"
@@ -98,18 +98,18 @@
         </StackPanel>
 
         <Button x:Name="StartQuiz" Content="START QUIZ"
-     Width="115"
-     Height="30"
-     Margin="10"
-     FontSize="16"
-     FontWeight="Bold"
-     FontStyle="Italic"
-     HorizontalAlignment="Center"
-     VerticalAlignment="Top"
-     Background="#10A37F"
-     Foreground="White"
-     Click="StartQuiz_Click"
-     />
+         Width="115"
+         Height="30"
+         Margin="10"
+         FontSize="16"
+         FontWeight="Bold"
+         FontStyle="Italic"
+         HorizontalAlignment="Center"
+         VerticalAlignment="Top"
+         Background="#10A37F"
+         Foreground="White"
+         Click="StartQuiz_Click"
+        />
 
         <Button x:Name="TaskAssistant" Content="TASK"
           Width="100"
@@ -123,7 +123,7 @@
           Background="#10A37F"
           Foreground="White"
           Click="TaskAssistant_Click"
-         />
+        />
 
 
 
@@ -200,18 +200,21 @@
                  FontSize="14"
                  VerticalContentAlignment="Center"
                  Margin="0,0,5,0"
-                 />
+                />
 
                 <Button Content="ENTER"
-                Grid.Column="1"
-                Width="80"
-                Height="30"
-                Background="#007ACC"
-                Foreground="White"
-                FontWeight="Bold"
-                FontSize="16"
-                FontStyle="Italic"
-                Click="SubmitTaskCommand_Click" />
+                 Grid.Column="1"
+                 Width="80"
+                 Height="30"
+                 Background="#007ACC"
+                 Foreground="White"
+                 FontWeight="Bold"
+                 FontSize="16"
+                 FontStyle="Italic"
+                 Click="SubmitTaskCommand_Click" 
+                />
+                
+                
             </Grid>
 
 

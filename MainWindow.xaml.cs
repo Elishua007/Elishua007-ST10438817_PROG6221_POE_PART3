@@ -22,9 +22,7 @@ using System;
 
 namespace ST10438817_POE_PART3_CHATBOT
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+   
     public partial class MainWindow : Window
     {
 
@@ -43,9 +41,7 @@ namespace ST10438817_POE_PART3_CHATBOT
 
 
 
-        /// <summary>
-        /// Constructor - Initializes components and sets up event handlers
-        /// </summary>
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -57,13 +53,14 @@ namespace ST10438817_POE_PART3_CHATBOT
             ChatBot_Task.DisplayTaskMessage += OnTaskManagerMessageReceived;
         }
 
-        /// <summary>
-        /// Handles when the user's favorite topic is mentioned
-        /// </summary>
+        
+      
+        
       
         private void OnFavoriteTopicMentioned(string topic)
         {
             // Predefined responses for when favorite topic is referenced
+            // Handles when the user's favorite topic is mentioned
             string[] favouriteTopicResponses = {
             $"Ohh yes, I remember — {topic} was your favourite cybersecurity topic!",
             $"That's right! You're really into {topic}, aren't you?",
@@ -77,11 +74,12 @@ namespace ST10438817_POE_PART3_CHATBOT
                 HorizontalAlignment.Left);
         }
 
-        /// <summary>
-        /// Window loaded event handler - Sets up initial UI state
-        /// </summary>
+       
+      
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // Window loaded event handler - Sets up initial UI state
+            
             // Initialize UI elements
             LoadingBar.Visibility = Visibility.Visible; // Hide progress bar initially
             ChatBotLogo.Text = ChatBot_Logo.DisplayIntroLogo();
@@ -95,9 +93,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             this.Width = 500;   // Set initial window width
         }
 
-        /// <summary>
-        /// Handles key presses in the window
-        /// </summary>
+        
         private async void Window_KeyDown(object sender, KeyEventArgs e)
         {
             // Start chat when Enter is pressed and chat UI isn't visible
@@ -147,11 +143,10 @@ namespace ST10438817_POE_PART3_CHATBOT
             }
         }
 
-        /// <summary>
-        /// Plays the chatbot's welcome voice message
-        /// </summary>
+        
         private void PlayChatBotVoice()
         {
+            // Plays the chatbot's welcome voice message
             try
             {
                 // Initialize audio playback
@@ -176,12 +171,13 @@ namespace ST10438817_POE_PART3_CHATBOT
             }
         }
 
-        /// <summary>
-        /// Configures user profile based on input
-        /// </summary>
-        /// <returns>True if configuration should continue, False if ending</returns>
+       
+        
         private bool ConfigureUser()
         {
+            /// Configures user profile based on input
+
+
             // Scroll to bottom of chat and get user input
             ChatBotScrollBar.ScrollToEnd();
             string UserInput = UserInputBox.Text.Trim();
@@ -253,9 +249,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             return true;
         }
 
-        /// <summary>
-        /// Handles send button click event
-        /// </summary>
+     
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             string userInput = UserInputBox.Text.Trim();
@@ -277,9 +271,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             UserInputBox.Clear();
         }
 
-        /// <summary>
-        /// Displays goodbye screen and hides chat interface
-        /// </summary>
+       
         private void GoodbyeLogo()
         {
             ChatUI.Visibility = Visibility.Collapsed;
@@ -287,9 +279,6 @@ namespace ST10438817_POE_PART3_CHATBOT
             ChatBotLogo.Text = ChatBot_Logo.DisplayGoodbyeLogo();
         }
 
-        /// <summary>
-        /// Switches to quiz interface
-        /// </summary>
         private void StartQuiz_Click(object sender, RoutedEventArgs e)
         {
             // Hide chat UI and show quiz UI
@@ -310,9 +299,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             QuizAnswerBox.Focus();
         }
 
-        /// <summary>
-        /// Returns to main chat from quiz or task interfaces
-        /// </summary>
+      
         private void ReturnChatBot_Click(object sender, RoutedEventArgs e)
         {
             // Hide specialized UIs and show main chat
@@ -329,9 +316,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             this.Height = 500;  // Restore chat window height
         }
 
-        /// <summary>
-        /// Handles quiz answer submission
-        /// </summary>
+      
         private void SubmitAnswer_Click(object sender, RoutedEventArgs e)
         {
             string userAnswer = QuizAnswerBox.Text.Trim();
@@ -356,9 +341,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             QuizScrollBar.ScrollToEnd();
         }
 
-        /// <summary>
-        /// Adds a message to the quiz UI
-        /// </summary>
+       
         private void AddQuizMessage(string message, HorizontalAlignment alignment)
         {
             // Create message text element
@@ -389,18 +372,12 @@ namespace ST10438817_POE_PART3_CHATBOT
             QuizScrollBar.ScrollToEnd();
         }
 
-        /// <summary>
-        /// Handles incoming quiz messages from the quiz component
-        /// </summary>
         private void OnQuizMessageReceived(string message, HorizontalAlignment alignment)
         {
             // Ensure UI thread execution
             Dispatcher.Invoke(() => AddQuizMessage(message, alignment));
         }
 
-        /// <summary>
-        /// Switches to task assistant interface
-        /// </summary>
         private void TaskAssistant_Click(object sender, RoutedEventArgs e)
         {
             // Hide other UIs and show task UI
@@ -422,9 +399,6 @@ namespace ST10438817_POE_PART3_CHATBOT
             ChatBot_Task.ActivateTaskManager();
         }
 
-        /// <summary>
-        /// Handles task command submission
-        /// </summary>
         private void SubmitTaskCommand_Click(object sender, RoutedEventArgs e)
         {
             string taskInput = TaskInputBox.Text.Trim();
@@ -439,9 +413,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             TaskScrollBar.ScrollToEnd();
         }
 
-        /// <summary>
-        /// Adds a message to the task UI
-        /// </summary>
+       
         private void AddTaskMessage(string message, HorizontalAlignment alignment)
         {
             // Create message text element
@@ -472,18 +444,14 @@ namespace ST10438817_POE_PART3_CHATBOT
             TaskScrollBar.ScrollToEnd();
         }
 
-        /// <summary>
-        /// Handles incoming task messages from the task component
-        /// </summary>
+        
         private void OnTaskManagerMessageReceived(string message, HorizontalAlignment alignment)
         {
             // Ensure UI thread execution
             Dispatcher.Invoke(() => AddTaskMessage(message, alignment));
         }
 
-        /// <summary>
-        /// Displays activity log in chat
-        /// </summary>
+       
         private void ActivityLog_Click(object sender, RoutedEventArgs e)
         {
             ChatBotScrollBar.ScrollToEnd();
@@ -496,9 +464,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             ChatBot_Activity_Log.ActivityLog("ACTIVITY", "User Accessed Activity Log");
         }
 
-        /// <summary>
-        /// Processes and responds to user messages
-        /// </summary>
+      
         private void ProcessUserMessage(string userInput)
         {
             // Normalize input
@@ -618,7 +584,7 @@ namespace ST10438817_POE_PART3_CHATBOT
 
 
 
-    }
+    }// edn of class
 }
 
 

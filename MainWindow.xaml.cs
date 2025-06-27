@@ -460,8 +460,7 @@ namespace ST10438817_POE_PART3_CHATBOT
             string log = ChatBot_Activity_Log.DisplayActivityLog();
             ChatBot_Characteristics.AddMessage(log, HorizontalAlignment.Left);
 
-            // Record this access in the log
-            ChatBot_Activity_Log.ActivityLog("ACTIVITY", "User Accessed Activity Log");
+            
         }
 
       
@@ -483,6 +482,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                         var responses = DataDictionary.sentimentResponses[key];
                         string response = responses[random.Next(responses.Count)];
                         ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
+                        ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
                         matched = true;
                         break;
                     }
@@ -499,6 +499,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                             var responses = DataDictionary.sentimentResponses[key];
                             string response = responses[random.Next(responses.Count)];
                             ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
+                            ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
                             matched = true;
                             break;
                         }
@@ -516,6 +517,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                             var responses = DataDictionary.sentimentResponses[key];
                             string response = responses[random.Next(responses.Count)];
                             ChatBot_Characteristics.AddMessage(response, HorizontalAlignment.Left);
+                            ChatBot_Activity_Log.ActivityLog("SENTIMENT", $"User Sentiment Detected: {key}");
                             matched = true;
                             break;
                         }
@@ -531,6 +533,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                     if (userInput.Contains(key.ToLower()))
                     {
                         ChatBot_Characteristics.AddMessage(DataDictionary.GetRandomCyberResponse(key), HorizontalAlignment.Left);
+                        ChatBot_Activity_Log.ActivityLog("CYBERSECURITY", $"User Asked About: {key}");
                         matched = true;
                         break;
                     }
@@ -545,6 +548,7 @@ namespace ST10438817_POE_PART3_CHATBOT
                     if (userInput.Contains(key.ToLower()))
                     {
                         ChatBot_Characteristics.AddMessage(DataDictionary.chatResponses[key], HorizontalAlignment.Left);
+                        ChatBot_Activity_Log.ActivityLog("GENERAL", $"User Asked About: {key}");
                         matched = true;
                         break;
                     }
